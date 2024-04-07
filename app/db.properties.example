@@ -1,0 +1,11 @@
+#URL do servidor
+db.server=localhost
+
+#Nome do banco de dados
+db.database=nome_do_banco
+
+#Nome do usuário
+db.username=usuario
+
+#Senha do usuário
+db.password=senha
