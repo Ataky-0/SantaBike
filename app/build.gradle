@@ -9,7 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
-    id 'java'
+    // id 'java'
 }
 
 repositories {
@@ -24,26 +24,6 @@ dependencies {
     // compile files('app/database/')
 }
 
-sourceSets {
-    main {
-        // Adiciona o diretório que contém o arquivo .class como um diretório de origem adicional
-        java {
-            srcDirs 'database/'
-        }
-    }
-}
-
-
-testing {
-    suites {
-        // Configure the built-in test suite
-        test {
-            // Use JUnit4 test framework
-            useJUnit('4.13.2')
-        }
-    }
-}
-
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
@@ -54,4 +34,8 @@ java {
 application {
     // Define the main class for the application.
     mainClass = 'org.SantaBike.Main'
+}
+
+run {
+    standardInput = System.in
 }
