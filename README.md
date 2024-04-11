@@ -9,20 +9,25 @@ Para fazer isso, **dentro da pasta app** use o arquivo `db.properties.example` p
 
 ## Como Compilar e Rodar
 
+### -> Instalar Gradle ⬇
+O Gradle é o gerenciador do projeto, caso não o possua instalado em seu sistema [Clique aqui](https://gradle.org/install/) para um guia de instalação, escolha a versão "binary-only" caso esteja no Windows para instalar apenas o necessário.
+
+### -> Compilar ⚙
 Para compilar use o comando:
 
 ```sh
 gradle clean build
 ```
-*Importante que esteja na pasta certa, pode checar usar "dir" ou "tree" no Windows, "ls" ou "pwd" no Linux.*
+*Importante que esteja na pasta certa, pode checar usando "dir" ou "tree" no Windows, "ls" ou "pwd" no Linux.*
 
-O Gradle é o gerenciador do projeto, neste comando em específico ele irá limpar o ambiente de compilações passadas, e por fim compilar mais uma vez o projeto inteiro.
+Neste comando em específico, o Gradle irá limpar o ambiente de compilações passadas, e por fim compilar novamente o projeto inteiro.
 
+### -> Rodar *▶*
 Para rodar o projeto recém compilado:
 
 ```sh
 gradle run -q --console=plain --warning-mode none
 ```
 
-Este comando irá rodar o projeto compilado de maneira visualmente limpa, ou seja, sem avisos ou quaisquer ornamentações visuais provenientes do gerenciador de projeto (gradle).
+Este comando irá rodar o projeto em plena forma, ou seja, sem avisos ou quaisquer ornamentações visuais provenientes do gerenciador de projeto (Gradle).
 
