@@ -15,8 +15,16 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    flatDir {
+        dirs 'libs' // Diretório onde as bibliotecas estão armazenadas
+    }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.SantaBike.Main'
+    }
+}
 dependencies {
     // This dependency is used by the application.
     implementation libs.guava

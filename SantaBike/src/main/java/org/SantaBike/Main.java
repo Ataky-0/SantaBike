@@ -3,34 +3,42 @@
  */
 package org.SantaBike;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.Scanner;
-
 
 public class Main {
     static Scanner scanner;
-    
-    public static Properties loadProperties(String filePath) throws IOException {
-        Properties properties = new Properties();
-        try (InputStream inputStream = new FileInputStream(filePath)) {
-            properties.load(inputStream);
+
+    private static void pickUserTypeLogin(){
+        int escolha;
+        String menuString[] = {
+            "Cliente",
+            "Gerente",
+            "Voltar"
+        };
+        userUtils.drawMenu("==== Como Deseja Logar? ====", menuString);
+        escolha = userUtils.getUserChoice(scanner, 1, 3);
+        switch (escolha) {
+            case 1:
+                Cliente.initLogin(scanner);
+                break;
+            case 2:
+                Gerente.initLogin(scanner);
+                break;
+            case 3:
+                break;
         }
-        return properties;
     }
 
     public static void mainMenu(){
         int escolha;
         boolean sair = false;
         
+        String menuString[] = {
+            "Registrar",
+            "Logar",
+            "Sair"
+        }; 
         while (!sair) {
-            String menuString[] = {
-                "Registrar",
-                "Logar",
-                "Sair"
-            }; 
             userUtils.drawMenu("===== Bem-vindo ao SantaBike =====", menuString);
             escolha = userUtils.getUserChoice(scanner,1,3);
             
@@ -39,7 +47,7 @@ public class Main {
                     Cliente.registrarClienteMenu(scanner);
                     break;
                 case 2:
-                    // logar();
+                    pickUserTypeLogin();
                     break;
                 case 3:
                     sair = true;

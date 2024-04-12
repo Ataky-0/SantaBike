@@ -51,6 +51,7 @@ public class DataBase {
     public static Connection getConnection() {
         if (connection == null) {
             try {
+                Class.forName("org.postgresql.Driver");
                 Properties properties = new Properties();
                 try (InputStream inputStream = new FileInputStream("db.properties")) {
                     properties.load(inputStream);
@@ -63,7 +64,7 @@ public class DataBase {
                 String url = String.format("jdbc:postgresql://%s/%s",server,database);
                 connection = DriverManager.getConnection(url, username, password);
                 System.out.println("-> Banco conectado com sucesso.");
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 System.err.println("Conexão impedida com o banco de dados.");
             }
