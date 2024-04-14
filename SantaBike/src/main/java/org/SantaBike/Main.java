@@ -34,9 +34,9 @@ public class Main {
         boolean sair = false;
         
         String menuString[] = {
-            "Registrar",
             "Logar",
-            "Sair"
+            "Registrar",
+            "Sair do Sistema"
         }; 
         while (!sair) {
             userUtils.drawMenu("===== Bem-vindo ao SantaBike =====", menuString);
@@ -44,10 +44,10 @@ public class Main {
             
             switch (escolha) {
                 case 1:
-                    Cliente.registrarClienteMenu(scanner);
+                    pickUserTypeLogin();
                     break;
                 case 2:
-                    pickUserTypeLogin();
+                    Cliente.registrarClienteMenu(scanner);
                     break;
                 case 3:
                     sair = true;

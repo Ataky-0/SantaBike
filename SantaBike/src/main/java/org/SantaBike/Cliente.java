@@ -5,24 +5,26 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 class Cliente {
-    public static void drawClienteMenu(Scanner scanner){ // Menu Principal para Clientes.
+    public static void drawClienteMenu(Scanner scanner, String cpf){ // Menu Principal para Clientes.
         int escolha;
         boolean sair = false;
         String[] menuString = {
-            "Agendar um Serviço",
-            "Reservar um Produto",
+            "Agendar um Serviço", // Serviço está incluso no estoque
+            "Reservar um Produto", // Reserva algo do estoque
             "Sair"
         };
-        userUtils.drawMenu("==== Menu Cliente ====", menuString);
         while(!sair) {
+            userUtils.drawMenu("==== Menu Cliente ====", menuString);
             escolha = userUtils.getUserChoice(scanner, 1, 3);
             switch (escolha) {
+                case 1:
+
+                    break;
+                case 2:
+                    Reserva.drawReservaMenuCliente(scanner, cpf);
+                    break;
                 case 3:
                     sair = true;
-                    break;
-            
-                default:
-                    System.out.println("Não implementado ainda!");
                     break;
             }
         }
@@ -66,12 +68,13 @@ class Cliente {
             senha = userUtils.getUserString("Senha: ", scanner);
             if (confirmaConta(cpf, senha)) {
                 System.out.println("Logando como Cliente...");
-                drawClienteMenu(scanner);
+                drawClienteMenu(scanner, cpf);
                 // Leva ao menu principal do Cliente...
                 sair = true;
             } else {
+                userUtils.clearConsole();
                 System.out.printf("\nCPF ou Senha incorreto..\nDeseja tentar novamente?\n\n");
-                userUtils.drawMenu(null,new String[] {"Sim","Não"});
+                userUtils.drawMenu(null,new String[] {"Sim","Não"}, false);
                 int escolha = userUtils.getUserChoice(scanner, 1, 2);
                 switch (escolha) {
                     case 2:
@@ -123,9 +126,9 @@ class Cliente {
             "Sim, Prosseguir.",
             "Não, Voltar para menu principal."
         }; 
+        userUtils.drawMenu("Deseja prosseguir com criação de conta?", menuString);
 
         while (!sair) {
-            userUtils.drawMenu("Deseja prosseguir com criação de conta?", menuString);
             escolha = userUtils.getUserChoice(scanner,1,3);
             switch (escolha) {
                 case 1:

@@ -15,14 +15,16 @@ public class Gerente {
             "Relatórios",
             "Sair"
         };
-        userUtils.drawMenu("==== Menu Administrativo ====", menuString);
         while(!sair) {
+            userUtils.drawMenu("==== Menu Administrativo ====", menuString);
             escolha = userUtils.getUserChoice(scanner, 1, 5);
             switch (escolha) {
+                case 2:
+                    Reserva.drawReservaMenuGerente(scanner);
+                    break;
                 case 5:
                     sair = true;
                     break;
-            
                 default:
                     System.out.println("Não implementado ainda!");
                     break;
@@ -57,8 +59,9 @@ public class Gerente {
                 // Leva ao menu principal do Gerente...
                 sair = true;
             } else {
+                userUtils.clearConsole();
                 System.out.printf("\nNome ou Senha incorreto..\nDeseja tentar novamente?\n\n");
-                userUtils.drawMenu(null,new String[] {"Sim","Não"});
+                userUtils.drawMenu(null,new String[] {"Sim","Não"},false);
                 int escolha = userUtils.getUserChoice(scanner, 1, 2);
                 switch (escolha) {
                     case 2:

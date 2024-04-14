@@ -29,18 +29,16 @@ CREATE TABLE Estoque ( -- Inclui serviços
 
 CREATE TABLE Agendamentos (
     id SERIAL PRIMARY KEY,
-    cpf_cliente VARCHAR(13),
+    cpf_cliente VARCHAR(13), --fk
     hora TIME,
     data_marcada DATE,
-    id_venda INTEGER,
+    id_servico INTEGER,
     status VARCHAR(20) DEFAULT 'Pendente'
 );
 
 CREATE TABLE Vendas ( -- Inclui serviços
 	id SERIAL PRIMARY KEY,
-	nome VARCHAR(50),
-	descricao VARCHAR(100),
-	preco DECIMAL(10,2)
+    cpf_cliente VARCHAR(13), --fk
+    id_produto INTEGER,
+	quantidade INTEGER
 );
-
-
