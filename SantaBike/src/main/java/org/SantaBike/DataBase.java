@@ -48,6 +48,25 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+
+    public static void updateDB(String SQL, Object[] parametros) { // updateDB com parâmetros separados
+        Connection Conexao = DataBase.getConnection();
+        PreparedStatement statement;
+        try {
+            statement = Conexao.prepareStatement(SQL);
+            
+            // Definir os parâmetros
+            for (int i = 0; i < parametros.length; i++) {
+                statement.setObject(i + 1, parametros[i]);
+            }
+            
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("SQL provavelmente incorreto.");
+            e.printStackTrace();
+        }
+    }
+
     public static Connection getConnection() {
         if (connection == null) {
             try {
@@ -66,7 +85,7 @@ public class DataBase {
                 System.out.println("-> Banco conectado com sucesso.");
             } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                System.err.println("Conexão impedida com o banco de dados.");
+                throw new RuntimeException("Sem conexão com o banco de dados.");
             }
         }
         return connection;

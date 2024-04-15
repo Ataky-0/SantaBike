@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Reserva {
     
-    private static void cancelarReserva(Scanner scanner){
+    private static void cancelarReserva(Scanner scanner, String cpf_cliente){
         int escolha = userUtils.getUserInt("Digite o ID da reserva: ", scanner);
         String[] reserva = Vendas.puxarReserva(escolha);
-        if (reserva!=null){
+        if (reserva!=null && reserva[1].equals(cpf_cliente)){
             Vendas.revogarReserva(escolha);
         } else
             userUtils.Exception("Reserva inexistente!", scanner);
@@ -22,7 +22,7 @@ public class Reserva {
                 escolha = userUtils.getUserChoice(scanner, 1, 2);
                 switch (escolha) {
                     case 1:
-                        cancelarReserva(scanner);                    
+                        cancelarReserva(scanner, cpf_cliente);                    
                         break;
                     case 2:
                         sair = true;
@@ -77,7 +77,7 @@ public class Reserva {
         while(!sair){
             int escolha = userUtils.getUserInt("Digite um ID: ", scanner);
             userUtils.clearConsole();
-            if (Estoque.apresentaProduto(escolha)){
+            if (Estoque.apresentaItem(escolha,0)){
                 sair = true;
                 produtoMenu(scanner, escolha, cpf_cliente);
             }  else {
@@ -90,7 +90,7 @@ public class Reserva {
         int escolha, paginas = 1;
         boolean sair = false;
         while (!sair) {
-            Estoque.listarProdutos(paginas);
+            Estoque.listarItens(paginas,0);
             userUtils.drawMenu("Páginas", new String[] {"Avançar","Escolher","Retroceder","Sair"}, false);
             escolha = userUtils.getUserChoice(scanner, 1, 4);
             switch (escolha) {
@@ -138,6 +138,14 @@ public class Reserva {
     
     // !! Gerente Side !! \\
 
+    private static void cancelarReservaGerente(Scanner scanner){
+        int escolha = userUtils.getUserInt("Digite o ID da reserva: ", scanner);
+        String[] reserva = Vendas.puxarReserva(escolha);
+        if (reserva!=null){
+            Vendas.revogarReserva(escolha);
+        } else
+            userUtils.Exception("Reserva inexistente!", scanner);
+    }
     private static void confirmarReserva(Scanner scanner){
         int escolha = userUtils.getUserInt("Digite o ID da reserva: ", scanner);
         String[] reserva = Vendas.puxarReserva(escolha);
@@ -159,7 +167,7 @@ public class Reserva {
                         confirmarReserva(scanner);
                         break;
                     case 2:
-                        cancelarReserva(scanner);                    
+                        cancelarReservaGerente(scanner);                    
                         break;
                     case 3:
                         sair = true;

@@ -18,7 +18,7 @@ class Cliente {
             escolha = userUtils.getUserChoice(scanner, 1, 3);
             switch (escolha) {
                 case 1:
-
+                    Servico.drawAgendamentoMenuCliente(scanner, cpf);
                     break;
                 case 2:
                     Reserva.drawReservaMenuCliente(scanner, cpf);

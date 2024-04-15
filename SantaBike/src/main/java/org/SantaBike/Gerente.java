@@ -19,6 +19,9 @@ public class Gerente {
             userUtils.drawMenu("==== Menu Administrativo ====", menuString);
             escolha = userUtils.getUserChoice(scanner, 1, 5);
             switch (escolha) {
+                case 1:
+                    Servico.drawAgendamentoMenuGerente(scanner);
+                    break;
                 case 2:
                     Reserva.drawReservaMenuGerente(scanner);
                     break;

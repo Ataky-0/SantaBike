@@ -41,14 +41,28 @@ public class Estoque {
         }
         return false;
     }
-    public static boolean apresentaProduto(int id){
+    public static boolean apresentaItem(int id, int tipo){
         ResultSet produto = DataBase.consultarResulta(String.format("SELECT * FROM Estoque WHERE id = '%d'",id));
         try {
             if (produto.next()) {
                 String nome = produto.getString("nome"), descricao = produto.getString("descricao");
                 int quantidade = produto.getInt("quantidade"); 
                 double preco = produto.getDouble("preço");
-                System.out.printf("Nome do Produto: %s\nDescrição: %s\nDisponível: %d\nPreço: %.2f\n\n",nome,descricao,quantidade,preco);
+                String conteudo = "";
+                if (tipo == 0){ // produto
+                    if (quantidade<=0) return false; // para evitar que retorne um serviço
+                    conteudo = String.format("Nome do Produto: %s\nDescrição: %s\nDisponível: %d\nPreço: %.2f R$\n\n",nome,descricao,quantidade,preco);
+                } else if(tipo == 1){ // serviço
+                    if (quantidade>-1) return false; // para evitar que retorne um produto
+                    conteudo = String.format("Nome do Serviço: %s\nDescrição: %s\nPreço: %.2f R$\n\n",nome,descricao,preco);
+                } else { // generalizado
+                    String disponibilidade = "";
+                    if (quantidade==-1)
+                        disponibilidade = "Serviço";
+                    else disponibilidade = String.valueOf(quantidade);
+                    conteudo = String.format("Nome do Item: %s\nDescrição: %s\nDisponibilidade: %s\nPreço: %.2f R$\n\n",nome,descricao, disponibilidade,preco);
+                }
+                System.out.printf(conteudo);
                 return true;
             }
         } catch (SQLException e) {
@@ -57,7 +71,7 @@ public class Estoque {
         return false;
     }
 
-    public static List<String[]> buscarProduto(ResultSet estoqueBanco, int indiceInicio, int indiceFim, int target) {
+    public static List<String[]> buscarItem(ResultSet estoqueBanco, int indiceInicio, int indiceFim, int target) {
         List<String[]> resultados = new ArrayList<>();
         try {
             // target = 0 (produtos apenas), 1 (serviços apenas)
@@ -77,7 +91,7 @@ public class Estoque {
                     // vv
                     linha[3] = (linha[3].equals("-1")) ? "Serviço" : linha[3]; // operador ternário
                     // ^^ Quantidades "-1" serão tratadas como serviços.
-                    linha[4] = Double.toString(estoqueBanco.getDouble("preço"));
+                    linha[4] = Double.toString(estoqueBanco.getDouble("preço"))+" R$";
                     resultados.add(linha);
                 }
                 offset++;
@@ -95,15 +109,20 @@ public class Estoque {
         return resultados;
     }
     
-    public static void listarProdutos(int pagina){
+    public static void listarItens(int pagina, int tipo){
         int itemsPorPagina = 8;
         int indiceInicio = (pagina - 1) * itemsPorPagina;
         int indiceFim = pagina * itemsPorPagina - 1;
 
         ResultSet estoque = DataBase.consultarResulta("SELECT * FROM Estoque ORDER BY id");
-        List<String[]> resultados = buscarProduto(estoque, indiceInicio, indiceFim, 0);
+        List<String[]> resultados = buscarItem(estoque, indiceInicio, indiceFim, tipo);
         userUtils.clearConsole();
-        System.out.println("ID | Nome | Descrição | Qunt. | Preço");
+        String cabecario = "";
+        if (tipo == 0){
+            cabecario = "ID | Nome | Descrição | Qunt. | Preço";
+        } else if(tipo == 1)
+            cabecario = "ID | Nome | Descrição | Preço";
+        System.out.println(cabecario);
         for (String[] linha : resultados) {
             for (String coluna : linha) {
                 System.out.print(coluna + " | \t");

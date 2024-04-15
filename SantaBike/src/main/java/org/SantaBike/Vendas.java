@@ -5,17 +5,6 @@ import java.sql.SQLException;
 
 public class Vendas {
 
-    // public static int[] produtosDeCliente(String cpf_cliente){ // retorna o id dos produtos que o cliente ter reservado
-    //     int[] prodts = {};
-    //     try {
-    //         ResultSet produtos = DataBase.consultarResulta(String.format("SELECT * FROM Vendas WHERE cpf_cliente = '%s'",cpf_cliente));
-    //         while (produtos.next())
-    //             prodts[prodts.length]=produtos.getInt("id_produto");
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    //     return prodts;
-    // }
     public static boolean produtoJaReservado(String cpf_cliente, int id_produto){
         try {
             ResultSet reserva = DataBase.consultarResulta(String.format("SELECT * FROM Vendas WHERE cpf_cliente = '%s' AND id_produto = '%d'",cpf_cliente, id_produto));
@@ -61,7 +50,7 @@ public class Vendas {
         try {
             while(vendas.next()){
                 hasVendas = true;
-                Estoque.apresentaProduto(vendas.getInt("id_produto"));
+                Estoque.apresentaItem(vendas.getInt("id_produto"),0);
                 System.out.printf("ID da Reserva: %d\n",vendas.getInt("id"));
                 System.out.printf("Quantidade Reservado: %d\n",vendas.getInt("quantidade"));
                 System.out.println("------------------------------");
@@ -85,7 +74,7 @@ public class Vendas {
         try {
             while(vendas.next()){
                 hasVendas = true;
-                Estoque.apresentaProduto(vendas.getInt("id_produto"));
+                Estoque.apresentaItem(vendas.getInt("id_produto"),0);
                 System.out.printf("CPF do Cliente: %s\n",vendas.getString("cpf_cliente"));
                 System.out.printf("ID da Reserva: %d\n",vendas.getInt("id"));
                 System.out.printf("Quantidade Reservado: %d\n",vendas.getInt("quantidade"));
