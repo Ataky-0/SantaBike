@@ -28,6 +28,9 @@ public class Gerente {
                 case 3:
                     Produto.gerenciarEstoque(scanner);
                     break;
+                case 4:
+                    Relatorio.apresentarRelatorios(scanner);
+                    break;
                 case 5:
                     sair = true;
                     break;
