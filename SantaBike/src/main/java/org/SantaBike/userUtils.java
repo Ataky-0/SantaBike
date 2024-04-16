@@ -1,5 +1,6 @@
 package org.SantaBike;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
@@ -10,6 +11,27 @@ import java.util.Scanner;
 // Fortis Animas
 
 public class userUtils {
+
+    public static boolean yesOrNo(String text, Scanner scanner){
+        drawMenu(String.format("= %s =",text), new String[] {"Sim","Não"});
+        int escolha = getUserChoice(scanner, 1, 2);
+        switch (escolha) {
+            case 1:
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean yesOrNo(Scanner scanner){
+        drawMenu("= Prosseguir? (Confirmar) =", new String[] {"Sim","Não"});
+        int escolha = getUserChoice(scanner, 1, 2);
+        switch (escolha) {
+            case 1:
+                return true;
+        }
+        return false;
+    }
+
     public static void Exception(String text, Scanner scanner){
         System.out.printf("%s\nPressione qualquer tecla...",text);
         scanner.nextLine();
@@ -39,6 +61,38 @@ public class userUtils {
             System.out.print(text);
         String escolhaString = scanner.nextLine();
         return escolhaString;
+    }
+
+    public static BigDecimal getUserBigDecimal(String text, Scanner scanner) { // Obtém um grande decimal
+        if (text != null)
+            System.out.print(text);
+        while (true){
+            String escolhaString = scanner.nextLine();
+            try {
+                BigDecimal escolha = BigDecimal.valueOf(Double.parseDouble(escolhaString)); //  Garante que é um inteiro
+                return escolha;
+            } catch (NumberFormatException e){}
+            
+            System.out.println("Valor inválido.");
+        }
+    }
+
+    public static int getUserInt(String text, Scanner scanner, int min, int max) { // Obtém um inteiro com min e max
+        if (text != null)
+            System.out.print(text);
+        while (true){
+            String escolhaString = scanner.nextLine();
+            try {
+                int escolha = Integer.parseInt(escolhaString); //  Garante que é um inteiro
+                if (min != 0 && escolha < min) {
+                    System.out.println("Indique um valor maior que "+min);
+                } else if (max != 0 && escolha > max) {
+                    System.out.println("Indique um valor menor que "+max);
+                } else return escolha;
+            } catch (NumberFormatException e){}
+            
+            System.out.println("Valor inválido.");
+        }
     }
 
     public static int getUserInt(String text, Scanner scanner) { // Obtém um inteiro

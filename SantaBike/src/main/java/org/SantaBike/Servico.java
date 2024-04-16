@@ -100,7 +100,8 @@ public class Servico {
         int escolha, paginas = 1;
         boolean sair = false;
         while (!sair) {
-            Estoque.listarItens(paginas,1);
+            if(!Estoque.listarItens(paginas,1))
+                System.out.println("Não há mais itens para mostrar..."); 
             userUtils.drawMenu("Páginas", new String[] {"Avançar","Escolher","Retroceder","Sair"}, false);
             escolha = userUtils.getUserChoice(scanner, 1, 4);
             switch (escolha) {
@@ -150,9 +151,7 @@ public class Servico {
     private static void deletarAgendamento(Scanner scanner){
         int escolha = userUtils.getUserInt("Escolha um serviço para remover: ", scanner);
         if (Agendamentos.puxarAgendamento(escolha)!=null){
-            userUtils.drawMenu("Tem certeza?", new String[] {"Sim","Não"}, false);
-            int confirmar = userUtils.getUserChoice(scanner, 1, 2);
-            if (confirmar==1)
+            if (userUtils.yesOrNo(scanner))
                 Agendamentos.deletarAgendamento(escolha);
         } else
             System.out.println("Agendamento inexistente.");

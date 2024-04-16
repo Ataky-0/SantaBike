@@ -8,6 +8,24 @@ import java.util.List;
 
 public class Estoque {
 
+    public static void eliminarItem(int id){
+        ResultSet holder;
+        try {
+            // Agendado check
+            holder = DataBase.consultarResulta(String.format("SELECT * FROM Agendamentos WHERE id_servico = '%d'",id));
+            if (holder.next())
+                Agendamentos.deletarAgendamento(holder.getInt("id"));
+            // Reservado check
+            holder = DataBase.consultarResulta(String.format("SELECT * FROM Vendas WHERE id_produto = '%d'",id));
+            if (holder.next())
+                Vendas.terminarReserva(holder.getInt("id"));
+            // Remover enfim item
+            DataBase.updateDB(String.format("DELETE FROM Estoque WHERE id = '%d'",id)); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String[] puxarItem(int id){
         try {
             ResultSet item = DataBase.consultarResulta(String.format("SELECT * FROM Estoque WHERE id = '%d'",id));
@@ -31,7 +49,7 @@ public class Estoque {
         try {
             if (produto.next()) {
                 int quantidade = produto.getInt("quantidade");
-                if (quantidade-qnt_consumir>0) {
+                if (quantidade-qnt_consumir>=0) {
                     DataBase.updateDB(String.format("UPDATE Estoque SET quantidade = '%d' WHERE id = '%d'",quantidade-qnt_consumir,id));
                     return true;
                 }
@@ -71,7 +89,7 @@ public class Estoque {
         return false;
     }
 
-    public static List<String[]> buscarItem(ResultSet estoqueBanco, int indiceInicio, int indiceFim, int target) {
+    public static List<String[]> buscarItens(ResultSet estoqueBanco, int indiceInicio, int indiceFim, int target) {
         List<String[]> resultados = new ArrayList<>();
         try {
             // target = 0 (produtos apenas), 1 (serviços apenas)
@@ -109,19 +127,23 @@ public class Estoque {
         return resultados;
     }
     
-    public static void listarItens(int pagina, int tipo){
+    public static boolean listarItens(int pagina, int tipo){
         int itemsPorPagina = 8;
         int indiceInicio = (pagina - 1) * itemsPorPagina;
         int indiceFim = pagina * itemsPorPagina - 1;
 
         ResultSet estoque = DataBase.consultarResulta("SELECT * FROM Estoque ORDER BY id");
-        List<String[]> resultados = buscarItem(estoque, indiceInicio, indiceFim, tipo);
+        List<String[]> resultados = buscarItens(estoque, indiceInicio, indiceFim, tipo);
         userUtils.clearConsole();
+        if (resultados.isEmpty()){
+            System.out.println("Página: "+pagina);
+            return false;
+        }
         String cabecario = "";
-        if (tipo == 0){
-            cabecario = "ID | Nome | Descrição | Qunt. | Preço";
-        } else if(tipo == 1)
+        if (tipo == 1){
             cabecario = "ID | Nome | Descrição | Preço";
+        } else
+            cabecario = "ID | Nome | Descrição | Qunt. | Preço";
         System.out.println(cabecario);
         for (String[] linha : resultados) {
             for (String coluna : linha) {
@@ -130,5 +152,6 @@ public class Estoque {
             System.out.println();
         }
         System.out.println("Página: "+pagina);
+        return true;
     }
 }

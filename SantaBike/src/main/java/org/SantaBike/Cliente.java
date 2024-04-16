@@ -73,16 +73,9 @@ class Cliente {
                 sair = true;
             } else {
                 userUtils.clearConsole();
-                System.out.printf("\nCPF ou Senha incorreto..\nDeseja tentar novamente?\n\n");
-                userUtils.drawMenu(null,new String[] {"Sim","Não"}, false);
-                int escolha = userUtils.getUserChoice(scanner, 1, 2);
-                switch (escolha) {
-                    case 2:
-                        sair = true;
-                        break;
-                    default:
-                        break;
-                }
+                if(!userUtils.yesOrNo("CPF ou Senha incorreto..\nDeseja tentar novamente?", scanner))
+                    sair = true;
+                
             }
         }
     }
@@ -120,25 +113,8 @@ class Cliente {
     }
 
     public static void registrarClienteMenu(Scanner scanner){ // Menu para registrar Clientes.
-        int escolha;
-        boolean sair = false;
-        String menuString[] = {
-            "Sim, Prosseguir.",
-            "Não, Voltar para menu principal."
-        }; 
-        userUtils.drawMenu("Deseja prosseguir com criação de conta?", menuString);
-
-        while (!sair) {
-            escolha = userUtils.getUserChoice(scanner,1,3);
-            switch (escolha) {
-                case 1:
-                    initRegistrar(scanner);                    
-                    sair = true;
-                    break;
-                case 2:
-                    sair = true;
-                    break;
-            }
-        }
+        userUtils.clearConsole();
+        if(userUtils.yesOrNo("Deseja prosseguir com criação de conta?", scanner))
+            initRegistrar(scanner);
     }
 }

@@ -90,7 +90,8 @@ public class Reserva {
         int escolha, paginas = 1;
         boolean sair = false;
         while (!sair) {
-            Estoque.listarItens(paginas,0);
+            if(!Estoque.listarItens(paginas,0))
+                System.out.println("Não há mais itens para mostrar..."); 
             userUtils.drawMenu("Páginas", new String[] {"Avançar","Escolher","Retroceder","Sair"}, false);
             escolha = userUtils.getUserChoice(scanner, 1, 4);
             switch (escolha) {

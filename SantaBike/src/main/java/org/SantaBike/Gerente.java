@@ -25,6 +25,9 @@ public class Gerente {
                 case 2:
                     Reserva.drawReservaMenuGerente(scanner);
                     break;
+                case 3:
+                    Produto.gerenciarEstoque(scanner);
+                    break;
                 case 5:
                     sair = true;
                     break;
@@ -63,16 +66,8 @@ public class Gerente {
                 sair = true;
             } else {
                 userUtils.clearConsole();
-                System.out.printf("\nNome ou Senha incorreto..\nDeseja tentar novamente?\n\n");
-                userUtils.drawMenu(null,new String[] {"Sim","Não"},false);
-                int escolha = userUtils.getUserChoice(scanner, 1, 2);
-                switch (escolha) {
-                    case 2:
-                        sair = true;
-                        break;
-                    default:
-                        break;
-                }
+                if (!userUtils.yesOrNo("Nome ou Senha incorreto..\nDeseja tentar novamente?",scanner))
+                    sair = true;
             }
         }
     }
