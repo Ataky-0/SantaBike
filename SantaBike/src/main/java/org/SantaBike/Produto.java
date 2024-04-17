@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Produto { // Estoque
 
-    public static void alterarPreço(Scanner scanner, int id, String itemInfo){
+    public static void alterarPreco(Scanner scanner, int id, String itemInfo){
         userUtils.clearConsole();
         System.out.println("Atual: "+itemInfo);
         BigDecimal newPreco = userUtils.getUserBigDecimal("Digite um novo preço para o item: ", scanner);
@@ -59,15 +59,19 @@ public class Produto { // Estoque
                 switch (escolha) {
                     case 1:
                         alterarNome(scanner, id, itemData[1]);
+                        itemData = Estoque.puxarItem(id);
                         break;
                     case 2:
                         alterarDescricao(scanner, id, itemData[2]);
+                        itemData = Estoque.puxarItem(id);
                         break;
                     case 3:
                         alterarQuantidade(scanner, id, itemData[3]);
+                        itemData = Estoque.puxarItem(id);
                         break;
                     case 4:
-                        alterarPreço(scanner, id, itemData[4]);
+                        alterarPreco(scanner, id, itemData[4]);
+                        itemData = Estoque.puxarItem(id);
                         break;
                     case 5:
                         sair = true;

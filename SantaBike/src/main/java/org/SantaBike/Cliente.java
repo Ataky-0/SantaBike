@@ -89,7 +89,7 @@ class Cliente {
         // Checando se o CPF específico já está registrado!
         System.out.printf("\n-> Checando CPF no banco de dados...");
         if (puxarCPF(cpf)) { 
-            System.out.printf("-> Este CPF já é registrado, por favor, tente o Login!\n\n");
+            userUtils.Exception("\n-> Este CPF já é registrado, por favor, tente o Login!\n\n",scanner);
             return;
         } else
             System.out.printf("\nCPF não cadastrado ainda, prosseguindo...\n\n");
