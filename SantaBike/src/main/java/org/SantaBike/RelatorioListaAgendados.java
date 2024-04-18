@@ -14,9 +14,11 @@ class RelatorioListaAgendados extends RelatorioDecorator{
         ResultSet agendamentos = DataBase.consultarResulta("SELECT * FROM Agendamentos WHERE status != 'Completado'");
         ArrayList<String> novaLista = super.lista();
         try {
-            novaLista.add("|| Agendamentos:");
-            while (agendamentos.next()) 
-                novaLista.add(String.format("CPF do Cliente: %s | Hora: %tT | Data Marcada: %tD | ID do Serviço: %d | Status: %s", agendamentos.getString("cpf_cliente"),agendamentos.getTime("hora"),agendamentos.getDate("data_marcada"),agendamentos.getInt("id_servico"),agendamentos.getString("status")));
+            novaLista.add("|| Agendamentos ||");
+            while (agendamentos.next()){
+                String[] userData = Cliente.puxarCliente(agendamentos.getString("cpf_cliente")); 
+                novaLista.add(String.format("Nome do Cliente: %s | Telefone: %s | Hora: %tT | Data Marcada: %tD | ID do Serviço: %d | Status: %s", userData[1],userData[2],agendamentos.getTime("hora"),agendamentos.getDate("data_marcada"),agendamentos.getInt("id_servico"),agendamentos.getString("status")));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

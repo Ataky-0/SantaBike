@@ -141,13 +141,15 @@ public class Estoque {
         }
         String cabecario = "";
         if (tipo == 1){
-            cabecario = "ID | Nome | Descrição | Preço";
+            cabecario = "ID |       Nome       |     Descrição    | Preço";
         } else
-            cabecario = "ID | Nome | Descrição | Qunt. | Preço";
+            cabecario = "ID |       Nome       |     Descrição    |     Quantidade   | Preço";
         System.out.println(cabecario);
         for (String[] linha : resultados) {
-            for (String coluna : linha) {
-                System.out.print(coluna + " | \t");
+            for (String coluna : linha){
+                if (coluna.length()>18)
+                    coluna = String.format("%.15s...",coluna);
+                System.out.printf("%.18s | ",coluna);
             }
             System.out.println();
         }

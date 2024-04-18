@@ -117,4 +117,23 @@ class Cliente {
         if(userUtils.yesOrNo("Deseja prosseguir com criação de conta?", scanner))
             initRegistrar(scanner);
     }
+    
+    public static String[] puxarCliente(String cpf){
+        try {
+            ResultSet item = DataBase.consultarResulta(String.format("SELECT * FROM Cliente WHERE CPF = '%s'",cpf));
+            if (item.next()){
+                String[] resultado = {
+                    item.getString("CPF"),
+                    item.getString("nome"),
+                    item.getString("telefone"),
+                    item.getString("rua"),
+                    String.valueOf(item.getInt("num_casa")),
+                    item.getString("senha")};
+                return(resultado);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -70,7 +70,7 @@ public class Servico {
         int escolha;
         String[] menuString = {
             "Agendar",
-            "Sair"
+            "Voltar"
         };
         userUtils.drawMenu("Serviço",menuString,false);
         escolha = userUtils.getUserChoice(scanner, 1, 2);
@@ -102,7 +102,7 @@ public class Servico {
         while (!sair) {
             if(!Estoque.listarItens(paginas,1))
                 System.out.println("Não há mais itens para mostrar..."); 
-            userUtils.drawMenu("Páginas", new String[] {"Avançar","Escolher","Retroceder","Sair"}, false);
+            userUtils.drawMenu("Páginas", new String[] {"Avançar","Escolher","Retroceder","Voltar"}, false);
             escolha = userUtils.getUserChoice(scanner, 1, 4);
             switch (escolha) {
                 case 1:
@@ -127,7 +127,7 @@ public class Servico {
         String[] menuString = {
             "Listar Serviços",
             "Listar Agendamentos",
-            "Sair"
+            "Voltar"
         };
         while(!sair) {
             userUtils.drawMenu("==== Agendamentos - Cliente ====", menuString);
@@ -223,7 +223,7 @@ public class Servico {
         boolean sair = false;
         String[] menuString = {
             "Listar Agendamentos",
-            "Sair"
+            "Voltar"
         };
         while(!sair) {
             userUtils.drawMenu("==== Agendamentos - Gerente ====", menuString);

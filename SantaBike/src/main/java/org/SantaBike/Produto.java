@@ -52,7 +52,7 @@ public class Produto { // Estoque
                     String.format("Editar Descrição (%.25s...)",itemData[2]),
                     String.format("Editar Quantidade (%s)",(itemData[3].equals("-1") ? "Serviço" : itemData[3])),
                     String.format("Editar Preço (%s)",itemData[4]),
-                    "Sair"
+                    "Voltar"
                 };
                 userUtils.drawMenu("=== Editar Item ===", menuString);
                 int escolha = userUtils.getUserChoice(scanner,1,5);
@@ -86,7 +86,7 @@ public class Produto { // Estoque
         String[] menuString = {
             "Editar Item",
             "Apagar Item",
-            "Sair"
+            "Voltar"
         };
         int id = userUtils.getUserInt("Digite o ID do item: ", scanner);
         userUtils.clearConsole();
@@ -125,7 +125,7 @@ public class Produto { // Estoque
         while (!sair) {
             if(!Estoque.listarItens(paginas,2))
                 System.out.println("Não há mais itens para mostrar..."); 
-            userUtils.drawMenu("Páginas", new String[] {"Avançar","Retroceder","Escolher Item", "Adicionar Item","Sair"}, false);
+            userUtils.drawMenu("Páginas", new String[] {"Avançar","Retroceder","Escolher Item", "Adicionar Item","Voltar"}, false);
             escolha = userUtils.getUserChoice(scanner, 1, 5);
             switch (escolha) {
                 case 1:
